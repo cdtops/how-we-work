@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How We Work — Team Working Styles</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;1,300&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #FAF7F2; --warm-white: #FFFEF9; --ink: #1C1917;
+    --soft-ink: #44403C; --muted: #A8A29E; --accent: #D97757;
+    --accent-soft: #FDE8DF; --sage: #7C9E8A; --sage-soft: #E4EFE8;
+    --border: #E7E2DA; --selected-bg: #FDE8DF; --selected-border: #D97757;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); min-height: 100vh; }
+  .view { display: none; } .view.active { display: block; }
+
+  /* NAV */
+  .top-nav { background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 0 40px; display: flex; align-items: center; justify-content: space-between; height: 52px; position: sticky; top: 0; z-index: 100; }
+  .nav-brand { font-family: 'Fraunces', serif; font-size: 16px; font-weight: 400; }
+  .nav-brand em { font-style: italic; color: var(--accent); }
+  .nav-actions { display: flex; gap: 8px; }
+  .nav-btn { padding: 6px 16px; border-radius: 100px; font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; border: 1.5px solid var(--border); background: transparent; color: var(--soft-ink); }
+  .nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .nav-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+  .nav-btn.primary:hover { background: #C4623E; }
+
+  /* SHARED */
+  .page-header { background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 48px 40px 36px; max-width: 900px; margin: 0 auto; }
+  .page-tag { font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .page-title { font-family: 'Fraunces', serif; font-size: 42px; font-weight: 300; line-height: 1.1; margin-bottom: 10px; }
+  .page-title em { font-style: italic; color: var(--accent); }
+  .page-subtitle { font-size: 15px; color: var(--soft-ink); font-weight: 300; line-height: 1.6; max-width: 520px; }
+
+  /* FORM */
+  .name-section { max-width: 900px; margin: 0 auto; background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 24px 40px; display: flex; align-items: center; gap: 16px; }
+  .avatar-circle { width: 44px; height: 44px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 18px; color: var(--accent); flex-shrink: 0; }
+  .name-input { font-family: 'DM Sans', sans-serif; font-size: 18px; font-weight: 500; border: none; background: transparent; color: var(--ink); outline: none; width: 100%; }
+  .name-input::placeholder { color: var(--muted); font-weight: 300; }
+  .form-content { max-width: 900px; margin: 0 auto; background: var(--warm-white); padding: 0 40px; }
+  .section { border-bottom: 1px solid var(--border); padding: 32px 0; }
+  .section:last-child { border-bottom: none; }
+  .section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+  .section-title { font-family: 'Fraunces', serif; font-size: 20px; font-weight: 400; color: var(--ink); margin-bottom: 20px; }
+  .subsection-title { font-size: 13px; font-weight: 500; color: var(--soft-ink); margin-bottom: 10px; margin-top: 20px; }
+  .subsection-title:first-of-type { margin-top: 0; }
+
+  /* CHIPS */
+  .chip-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 4px; }
+  .chip { padding: 8px 16px; border-radius: 100px; border: 1.5px solid var(--border); background: var(--cream); font-size: 13px; font-weight: 400; color: var(--soft-ink); cursor: pointer; transition: all 0.15s ease; user-select: none; }
+  .chip:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+  .chip.selected { border-color: var(--selected-border); background: var(--selected-bg); color: var(--accent); font-weight: 500; }
+
+  /* SCALE */
+  .scale-container { display: flex; align-items: center; margin: 8px 0 6px; }
+  .scale-label-left, .scale-label-right { font-size: 12px; color: var(--muted); white-space: nowrap; flex-shrink: 0; }
+  .scale-label-left { margin-right: 12px; } .scale-label-right { margin-left: 12px; }
+  .scale-dots { display: flex; gap: 6px; flex: 1; justify-content: center; }
+  .scale-dot { width: 32px; height: 32px; border-radius: 50%; border: 1.5px solid var(--border); background: var(--cream); cursor: pointer; transition: all 0.15s ease; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--muted); }
+  .scale-dot:hover { border-color: var(--accent); background: var(--accent-soft); }
+  .scale-dot.selected { border-color: var(--accent); background: var(--accent); color: white; }
+
+  /* TIME BLOCKS */
+  .time-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin-bottom: 8px; }
+  .time-block { padding: 10px 4px; border-radius: 8px; border: 1.5px solid var(--border); background: var(--cream); cursor: pointer; text-align: center; transition: all 0.15s ease; user-select: none; }
+  .time-block:hover { border-color: var(--accent); }
+  .time-block .time-label { font-size: 11px; color: var(--muted); display: block; margin-bottom: 4px; }
+  .time-block .time-emoji { font-size: 18px; display: block; }
+  .time-block.deep-work.selected { border-color: var(--sage); background: var(--sage-soft); }
+  .time-block.meeting.selected { border-color: var(--accent); background: var(--accent-soft); }
+  .time-block.offline.selected { border-color: #94A3B8; background: #F1F5F9; }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 16px; margin-bottom: 12px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--soft-ink); cursor: pointer; padding: 4px 10px 4px 6px; border-radius: 6px; transition: background 0.1s; }
+  .legend-item:hover { background: var(--border); }
+  .legend-item.active-mode { font-weight: 500; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+  .legend-dot.deep { background: var(--sage); } .legend-dot.meeting { background: var(--accent); } .legend-dot.offline { background: #94A3B8; }
+
+  /* DROPDOWNS */
+  .tz-select { font-family: 'DM Sans', sans-serif; font-size: 14px; color: var(--ink); border: 1.5px solid var(--border); border-radius: 10px; padding: 10px 36px 10px 14px; background: var(--cream); outline: none; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A8A29E' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; width: 100%; transition: border-color 0.15s; }
+  .tz-select:focus { border-color: var(--accent); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .field-group { display: flex; flex-direction: column; gap: 8px; }
+  .field-label { font-size: 13px; color: var(--soft-ink); font-weight: 500; }
+
+  /* TEXTAREA */
+  .text-field { width: 100%; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 300; color: var(--ink); border: 1.5px solid var(--border); border-radius: 10px; padding: 12px 16px; background: var(--cream); outline: none; resize: none; transition: border-color 0.15s; line-height: 1.6; }
+  .text-field:focus { border-color: var(--accent); background: var(--warm-white); }
+  .text-field::placeholder { color: var(--muted); }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; font-style: italic; }
+
+  /* SUBMIT */
+  .submit-section { max-width: 900px; margin: 0 auto; padding: 28px 40px; background: var(--warm-white); border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+  .submit-note { font-size: 13px; color: var(--muted); font-style: italic; }
+  .submit-btn { background: var(--accent); color: white; border: none; border-radius: 100px; padding: 12px 28px; font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; }
+  .submit-btn:hover { background: #C4623E; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(217,119,87,0.3); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .spinner { width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.4); border-top-color: white; border-radius: 50%; animation: spin 0.7s linear infinite; display: none; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* DASHBOARD */
+  #dashboardView { padding-bottom: 80px; }
+  .dashboard-header { max-width: 900px; margin: 0 auto; padding: 40px 40px 28px; background: var(--warm-white); border-bottom: 1px solid var(--border); }
+  .dashboard-title { font-family: 'Fraunces', serif; font-size: 36px; font-weight: 300; margin-bottom: 8px; }
+  .dashboard-title em { font-style: italic; color: var(--accent); }
+  .dashboard-subtitle { font-size: 14px; color: var(--muted); }
+  .group-tabs { max-width: 900px; margin: 0 auto; padding: 0 40px; background: var(--warm-white); border-bottom: 1px solid var(--border); display: flex; gap: 0; overflow-x: auto; }
+  .group-tab { padding: 14px 20px; font-size: 13px; font-weight: 400; color: var(--muted); cursor: pointer; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.15s; }
+  .group-tab:hover { color: var(--soft-ink); }
+  .group-tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 500; }
+  .dashboard-body { max-width: 900px; margin: 0 auto; padding: 32px 40px; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .person-card { background: var(--warm-white); border: 1.5px solid var(--border); border-radius: 16px; padding: 24px; cursor: pointer; transition: all 0.2s ease; position: relative; overflow: hidden; }
+  .person-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.2s ease; }
+  .person-card:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.07); }
+  .person-card:hover::before { transform: scaleX(1); }
+  .card-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 20px; color: var(--accent); margin-bottom: 14px; }
+  .card-name { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; margin-bottom: 4px; }
+  .card-tz { font-size: 12px; color: var(--muted); margin-bottom: 14px; }
+  .card-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .card-tag { font-size: 11px; padding: 3px 10px; border-radius: 100px; background: var(--cream); border: 1px solid var(--border); color: var(--soft-ink); }
+  .group-section { margin-bottom: 36px; }
+  .group-section-title { font-family: 'Fraunces', serif; font-size: 18px; font-weight: 400; margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+  .group-count { font-family: 'DM Sans', sans-serif; font-size: 12px; color: var(--muted); font-weight: 400; }
+  .group-people { display: flex; flex-wrap: wrap; gap: 10px; }
+  .group-person-pill { display: flex; align-items: center; gap: 8px; padding: 8px 14px 8px 8px; background: var(--warm-white); border: 1.5px solid var(--border); border-radius: 100px; cursor: pointer; transition: all 0.15s; font-size: 13px; }
+  .group-person-pill:hover { border-color: var(--accent); color: var(--accent); }
+  .pill-avatar { width: 24px; height: 24px; border-radius: 50%; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 11px; color: var(--accent); flex-shrink: 0; }
+  .empty-state { text-align: center; padding: 60px 20px; color: var(--muted); }
+  .empty-state-title { font-family: 'Fraunces', serif; font-size: 22px; font-weight: 300; margin-bottom: 8px; color: var(--soft-ink); }
+  .empty-state p { font-size: 14px; margin-bottom: 20px; }
+
+  /* PROFILE */
+  #profileView { padding-bottom: 80px; }
+  .profile-header { max-width: 900px; margin: 0 auto; background: var(--warm-white); border-bottom: 1px solid var(--border); padding: 40px 40px 32px; display: flex; align-items: center; gap: 24px; }
+  .profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--accent-soft); border: 2px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: 'Fraunces', serif; font-size: 30px; color: var(--accent); flex-shrink: 0; }
+  .profile-name { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 300; margin-bottom: 4px; }
+  .profile-meta { font-size: 14px; color: var(--muted); }
+  .profile-body { max-width: 900px; margin: 0 auto; padding: 0 40px; background: var(--warm-white); }
+  .profile-section { border-bottom: 1px solid var(--border); padding: 28px 0; }
+  .profile-section:last-child { border-bottom: none; }
+  .profile-section-label { font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
+  .profile-row { margin-bottom: 16px; }
+  .profile-row:last-child { margin-bottom: 0; }
+  .profile-row-label { font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .profile-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .profile-chip { font-size: 12px; padding: 5px 12px; border-radius: 100px; background: var(--accent-soft); border: 1px solid var(--accent); color: var(--accent); font-weight: 500; }
+  .profile-text { font-size: 14px; color: var(--soft-ink); line-height: 1.6; font-weight: 300; background: var(--cream); border-radius: 10px; padding: 12px 16px; border: 1px solid var(--border); }
+  .profile-scale-bar { display: flex; align-items: center; gap: 10px; font-size: 12px; color: var(--muted); }
+  .scale-track { flex: 1; height: 6px; background: var(--border); border-radius: 100px; position: relative; }
+  .scale-fill { height: 100%; border-radius: 100px; background: var(--accent); }
+  .mini-time-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; }
+  .mini-time-block { padding: 6px 2px; border-radius: 6px; border: 1px solid var(--border); background: var(--cream); text-align: center; font-size: 10px; color: var(--muted); }
+  .mini-time-block.deep-work { border-color: var(--sage); background: var(--sage-soft); color: #3D6B4F; }
+  .mini-time-block.meeting { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+  .mini-time-block.offline { border-color: #94A3B8; background: #F1F5F9; color: #64748B; }
+
+  /* BANNERS */
+  .config-banner { max-width: 900px; margin: 16px auto 0; background: #FFF9E6; border: 1.5px solid #F5C842; border-radius: 12px; padding: 14px 20px; font-size: 13px; color: #78610A; display: flex; align-items: center; gap: 10px; }
+  .config-banner a { color: #78610A; font-weight: 500; }
+  .success-banner { display: none; max-width: 900px; margin: 16px auto 0; background: var(--sage-soft); border: 1.5px solid var(--sage); border-radius: 12px; padding: 16px 24px; font-size: 14px; color: #3D6B4F; text-align: center; }
+
+  @media (max-width: 640px) {
+    .page-header, .name-section, .form-content, .submit-section, .dashboard-header, .dashboard-body, .group-tabs, .profile-header, .profile-body { padding-left: 20px; padding-right: 20px; }
+    .two-col { grid-template-columns: 1fr; }
+    .time-grid, .mini-time-grid { grid-template-columns: repeat(3, 1fr); }
+    .page-title, .dashboard-title { font-size: 28px; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    .scale-label-left, .scale-label-right { display: none; }
+    .top-nav { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="nav-brand">How <em>We</em> Work</div>
+  <div class="nav-actions">
+    <button class="nav-btn" onclick="showView('dashboard')">👥 Team View</button>
+    <button class="nav-btn primary" onclick="showView('form')">✏️ Fill Mine Out</button>
+  </div>
+</nav>
+
+<!-- ═══════════════════ FORM VIEW ═══════════════════ -->
+<div id="formView" class="view active">
+  <div id="configBanner" class="config-banner" style="display:none;">
+    ⚠️ <span>Airtable not connected — submissions save locally only. <a href="#" onclick="showConfigModal();return false;">Connect Airtable →</a></span>
+  </div>
+
+  <div class="page-header">
+    <div class="page-tag">Team Operating System</div>
+    <h1 class="page-title">How <em>I</em> Work</h1>
+    <p class="page-subtitle">Hello Dream Team! The following form is meant to help make our preferences and work styles more visible to one another. Mostly clicks — takes about 3 minutes.</p>
+  </div>
+
+  <div class="name-section">
+    <div class="avatar-circle" id="avatarCircle">?</div>
+    <input class="name-input" type="text" placeholder="Your name / preferred name…" id="nameInput" oninput="updateAvatar(this.value)" />
+  </div>
+
+  <div class="form-content">
+
+    <div class="section">
+      <div class="section-label">Location & Time</div>
+      <div class="section-title">When I'm online</div>
+      <div class="two-col">
+        <div class="field-group"><div class="field-label">Time zone</div>
+          <select class="tz-select" id="f-timezone">
+            <option value="">Select timezone…</option>
+            <option>PT — Pacific Time (UTC−8/−7)</option><option>MT — Mountain Time (UTC−7/−6)</option>
+            <option>CT — Central Time (UTC−6/−5)</option><option>ET — Eastern Time (UTC−5/−4)</option>
+            <option>GMT — London (UTC+0/+1)</option><option>CET — Central Europe (UTC+1/+2)</option>
+            <option>IST — India (UTC+5:30)</option><option>AEST — Sydney (UTC+10/+11)</option>
+          </select>
+        </div>
+        <div class="field-group"><div class="field-label">Typical start time</div>
+          <select class="tz-select" id="f-starttime">
+            <option value="">Select…</option><option>Before 7am — early bird 🐦</option>
+            <option>7–8am</option><option>8–9am</option><option>9–10am</option>
+            <option>10–11am</option><option>After 11am — slow starter</option>
+          </select>
+        </div>
+      </div>
+      <div class="two-col" style="margin-top:12px;">
+        <div class="field-group"><div class="field-label">Typical end time</div>
+          <select class="tz-select" id="f-endtime">
+            <option value="">Select…</option><option>Before 3pm</option><option>3–4pm</option>
+            <option>4–5pm</option><option>5–6pm</option><option>6–7pm</option>
+            <option>After 7pm — night owl 🦉</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Energy</div>
+      <div class="section-title">When I do my best work</div>
+      <div class="subsection-title">Peak focus time</div>
+      <div class="chip-group" data-group="peak" data-multi="true" id="f-peak">
+        <div class="chip" onclick="toggleChip(this)">🌅 Early morning</div>
+        <div class="chip" onclick="toggleChip(this)">☀️ Mid-morning</div>
+        <div class="chip" onclick="toggleChip(this)">🌤 Early afternoon</div>
+        <div class="chip" onclick="toggleChip(this)">🌇 Late afternoon</div>
+        <div class="chip" onclick="toggleChip(this)">🌙 Evening</div>
+        <div class="chip" onclick="toggleChip(this)">🦉 Late night</div>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">Energy drop — when I hit a wall</div>
+      <div class="chip-group" data-group="drop" data-multi="false" id="f-drop">
+        <div class="chip" onclick="toggleChip(this)">After lunch</div>
+        <div class="chip" onclick="toggleChip(this)">Mid-afternoon</div>
+        <div class="chip" onclick="toggleChip(this)">Late afternoon</div>
+        <div class="chip" onclick="toggleChip(this)">Varies</div>
+        <div class="chip" onclick="toggleChip(this)">I don't really have one</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Daily Schedule</div>
+      <div class="section-title">My typical day — click to paint</div>
+      <div class="legend">
+        <div class="legend-item active-mode" onclick="setMode('deep-work')" id="mode-deep"><div class="legend-dot deep"></div> Deep work</div>
+        <div class="legend-item" onclick="setMode('meeting')" id="mode-meeting"><div class="legend-dot meeting"></div> Open to meetings</div>
+        <div class="legend-item" onclick="setMode('offline')" id="mode-offline"><div class="legend-dot offline"></div> Offline / unavailable</div>
+      </div>
+      <div class="time-grid" id="timeGrid"></div>
+      <p class="hint">Click blocks to paint them. Click a painted block to clear it.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Communication</div>
+      <div class="section-title">How I like to communicate</div>
+      <div class="subsection-title">Slack responsiveness</div>
+      <div class="scale-container">
+        <span class="scale-label-left">Slow burn<br><small style="font-size:10px;color:var(--muted)">check 2–3x/day</small></span>
+        <div class="scale-dots" id="slack-scale">
+          <div class="scale-dot" onclick="selectScale('slack',1)">1</div><div class="scale-dot" onclick="selectScale('slack',2)">2</div>
+          <div class="scale-dot" onclick="selectScale('slack',3)">3</div><div class="scale-dot" onclick="selectScale('slack',4)">4</div>
+          <div class="scale-dot" onclick="selectScale('slack',5)">5</div>
+        </div>
+        <span class="scale-label-right">Rapid fire<br><small style="font-size:10px;color:var(--muted)">always on</small></span>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">Async vs. sync preference</div>
+      <div class="scale-container">
+        <span class="scale-label-left">Fully async<br><small style="font-size:10px;color:var(--muted)">docs & messages</small></span>
+        <div class="scale-dots" id="asyncsync-scale">
+          <div class="scale-dot" onclick="selectScale('asyncsync',1)">1</div><div class="scale-dot" onclick="selectScale('asyncsync',2)">2</div>
+          <div class="scale-dot" onclick="selectScale('asyncsync',3)">3</div><div class="scale-dot" onclick="selectScale('asyncsync',4)">4</div>
+          <div class="scale-dot" onclick="selectScale('asyncsync',5)">5</div>
+        </div>
+        <span class="scale-label-right">Sync first<br><small style="font-size:10px;color:var(--muted)">let's just call</small></span>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">For complex requests, reach me by</div>
+      <div class="chip-group" data-group="reach" data-multi="true" id="f-reach">
+        <div class="chip" onclick="toggleChip(this)">💬 Slack message</div><div class="chip" onclick="toggleChip(this)">📄 Written doc</div>
+        <div class="chip" onclick="toggleChip(this)">📞 Quick call</div><div class="chip" onclick="toggleChip(this)">📧 Email</div>
+        <div class="chip" onclick="toggleChip(this)">🗓 Scheduled meeting</div><div class="chip" onclick="toggleChip(this)">🎥 Loom video</div>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">I absorb information best when it's</div>
+      <div class="chip-group" data-group="learning" data-multi="true" id="f-learning">
+        <div class="chip" onclick="toggleChip(this)">👁 Visual — diagrams, slides, visuals</div>
+        <div class="chip" onclick="toggleChip(this)">📝 Written — docs, bullet points</div>
+        <div class="chip" onclick="toggleChip(this)">🗣 Verbal — talked through out loud</div>
+        <div class="chip" onclick="toggleChip(this)">🎥 Recorded — Loom or video walkthrough</div>
+        <div class="chip" onclick="toggleChip(this)">🤝 Hands-on — just let me try it</div>
+        <div class="chip" onclick="toggleChip(this)">📊 Data — show me the numbers</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Feedback</div>
+      <div class="section-title">How I like to give & receive feedback</div>
+      <div class="subsection-title">Receiving feedback — I prefer it</div>
+      <div class="chip-group" data-group="feedback" data-multi="true" id="f-feedback">
+        <div class="chip" onclick="toggleChip(this)">Direct & blunt</div><div class="chip" onclick="toggleChip(this)">Context first, then critique</div>
+        <div class="chip" onclick="toggleChip(this)">Written so I can process</div><div class="chip" onclick="toggleChip(this)">Live conversation</div>
+        <div class="chip" onclick="toggleChip(this)">In the moment</div><div class="chip" onclick="toggleChip(this)">After I've had time to cool</div>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">Public recognition — I feel</div>
+      <div class="chip-group" data-group="recognition" data-multi="false" id="f-recognition">
+        <div class="chip" onclick="toggleChip(this)">🙌 Energized by it</div><div class="chip" onclick="toggleChip(this)">😊 Fine with it</div>
+        <div class="chip" onclick="toggleChip(this)">😬 A bit uncomfortable</div><div class="chip" onclick="toggleChip(this)">🤫 Prefer private kudos</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Collaboration</div>
+      <div class="section-title">How I work with others</div>
+      <div class="subsection-title">Before a meeting I prefer to</div>
+      <div class="chip-group" data-group="premeet" data-multi="false" id="f-premeet">
+        <div class="chip" onclick="toggleChip(this)">📋 Read an agenda</div><div class="chip" onclick="toggleChip(this)">🧠 Think through it solo first</div>
+        <div class="chip" onclick="toggleChip(this)">🤷 Go with the flow</div><div class="chip" onclick="toggleChip(this)">💬 Pre-chat with someone</div>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">When I'm stuck I</div>
+      <div class="chip-group" data-group="stuck" data-multi="false" id="f-stuck">
+        <div class="chip" onclick="toggleChip(this)">🔇 Go quiet and figure it out</div><div class="chip" onclick="toggleChip(this)">🙋 Ask for help quickly</div>
+        <div class="chip" onclick="toggleChip(this)">⚡ Need space, then help</div><div class="chip" onclick="toggleChip(this)">📝 Write to think it through</div>
+      </div>
+      <div class="subsection-title" style="margin-top:20px;">When I'm overwhelmed you might notice</div>
+      <div class="chip-group" data-group="overwhelmed" data-multi="true" id="f-overwhelmed">
+        <div class="chip" onclick="toggleChip(this)">I go quiet</div><div class="chip" onclick="toggleChip(this)">I get scattered</div>
+        <div class="chip" onclick="toggleChip(this)">I work longer hours</div><div class="chip" onclick="toggleChip(this)">I ask more questions</div>
+        <div class="chip" onclick="toggleChip(this)">I cancel meetings</div><div class="chip" onclick="toggleChip(this)">Hard to tell from outside</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">The Unspoken Stuff</div>
+      <div class="section-title">A little more about me</div>
+      <div class="subsection-title">Hard stops or recurring commitments</div>
+      <textarea class="text-field" id="f-hardstops" placeholder="e.g. "School pickup at 3pm PT on Tuesdays and Thursdays"" rows="2"></textarea>
+      <div class="subsection-title" style="margin-top:20px;">One thing I wish my team just knew about how I work</div>
+      <textarea class="text-field" id="f-onething" placeholder="e.g. "I go quiet when I'm thinking hard — it doesn't mean I'm disengaged"" rows="3"></textarea>
+      <div class="subsection-title" style="margin-top:20px;">What lights me up at work ✨</div>
+      <textarea class="text-field" id="f-lightsup" placeholder="e.g. "Solving a hard problem with the team, or seeing a project finally come together"" rows="3"></textarea>
+    </div>
+
+  </div>
+
+  <div class="submit-section">
+    <span class="submit-note">Responses save to your team dashboard ✦</span>
+    <button class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+      <span id="submitLabel">Save my working style →</span>
+      <div class="spinner" id="submitSpinner"></div>
+    </button>
+  </div>
+  <div class="success-banner" id="successBanner">
+    ✦ Saved! Your working style is now visible to your team. <a href="#" onclick="showView('dashboard');return false;" style="color:#3D6B4F;font-weight:500;">View the team →</a>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ DASHBOARD VIEW ═══════════════════ -->
+<div id="dashboardView" class="view">
+  <div class="dashboard-header">
+    <div class="page-tag">Team Operating System</div>
+    <h2 class="dashboard-title">How <em>We</em> Work</h2>
+    <p class="dashboard-subtitle" id="dashSubtitle">Loading…</p>
+  </div>
+  <div class="group-tabs" id="groupTabs">
+    <div class="group-tab active" onclick="setGroupTab('all',this)">All Members</div>
+    <div class="group-tab" onclick="setGroupTab('peak',this)">Peak Hours</div>
+    <div class="group-tab" onclick="setGroupTab('slack',this)">Slack Style</div>
+    <div class="group-tab" onclick="setGroupTab('learning',this)">Learning Style</div>
+    <div class="group-tab" onclick="setGroupTab('feedback',this)">Feedback Style</div>
+    <div class="group-tab" onclick="setGroupTab('overwhelmed',this)">When Overwhelmed</div>
+  </div>
+  <div class="dashboard-body" id="dashboardBody"></div>
+</div>
+
+
+<!-- ═══════════════════ PROFILE VIEW ═══════════════════ -->
+<div id="profileView" class="view">
+  <div class="profile-header">
+    <div class="profile-avatar" id="profileAvatar">?</div>
+    <div><div class="profile-name" id="profileName">—</div><div class="profile-meta" id="profileMeta">—</div></div>
+  </div>
+  <div class="profile-body" id="profileBody"></div>
+</div>
+
+
+<!-- ═══════════════════ CONFIG MODAL ═══════════════════ -->
+<div id="configModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:999;align-items:center;justify-content:center;">
+  <div style="background:var(--warm-white);border-radius:16px;padding:32px;max-width:480px;width:90%;">
+    <h3 style="font-family:'Fraunces',serif;font-size:22px;font-weight:400;margin-bottom:8px;">Connect Airtable</h3>
+    <p style="font-size:13px;color:var(--muted);margin-bottom:20px;">Your credentials are stored only in this browser. <a href="https://support.airtable.com/docs/creating-and-using-api-keys-and-access-tokens" target="_blank" style="color:var(--accent);">How to get your token →</a></p>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div><label style="font-size:12px;color:var(--soft-ink);font-weight:500;display:block;margin-bottom:6px;">Personal Access Token</label>
+        <input id="cfgToken" type="password" placeholder="patXXXXXXXXXXXXXX" style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;outline:none;background:var(--cream);"></div>
+      <div><label style="font-size:12px;color:var(--soft-ink);font-weight:500;display:block;margin-bottom:6px;">Base ID</label>
+        <input id="cfgBase" type="text" placeholder="appXXXXXXXXXXXXXX" style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;outline:none;background:var(--cream);"></div>
+      <div><label style="font-size:12px;color:var(--soft-ink);font-weight:500;display:block;margin-bottom:6px;">Table Name</label>
+        <input id="cfgTable" type="text" placeholder="Working Styles" value="Working Styles" style="width:100%;font-family:'DM Sans',sans-serif;font-size:13px;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;outline:none;background:var(--cream);"></div>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:20px;">
+      <button onclick="saveConfig()" style="flex:1;background:var(--accent);color:white;border:none;border-radius:100px;padding:11px;font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;cursor:pointer;">Save & Connect</button>
+      <button onclick="closeConfigModal()" style="padding:11px 20px;border:1.5px solid var(--border);border-radius:100px;background:transparent;font-family:'DM Sans',sans-serif;font-size:13px;cursor:pointer;">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+// ─── CONFIG ───────────────────────────────────────────────────
+function isConfigured() { return !!(localStorage.getItem('at_token') && localStorage.getItem('at_base')); }
+
+function updateConfigUI() {
+  const b = document.getElementById('configBanner');
+  if (b) b.style.display = isConfigured() ? 'none' : 'flex';
+}
+
+function showConfigModal() {
+  const m = document.getElementById('configModal'); m.style.display = 'flex';
+  if (localStorage.getItem('at_token')) document.getElementById('cfgToken').value = localStorage.getItem('at_token');
+  if (localStorage.getItem('at_base'))  document.getElementById('cfgBase').value  = localStorage.getItem('at_base');
+  if (localStorage.getItem('at_table')) document.getElementById('cfgTable').value = localStorage.getItem('at_table');
+}
+
+function closeConfigModal() { document.getElementById('configModal').style.display = 'none'; }
+
+function saveConfig() {
+  localStorage.setItem('at_token', document.getElementById('cfgToken').value.trim());
+  localStorage.setItem('at_base',  document.getElementById('cfgBase').value.trim());
+  localStorage.setItem('at_table', document.getElementById('cfgTable').value.trim() || 'Working Styles');
+  closeConfigModal(); updateConfigUI();
+  alert('Connected! Submissions will now save to Airtable.');
+}
+
+// ─── VIEWS ────────────────────────────────────────────────────
+function showView(name) {
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+  document.getElementById(name + 'View').classList.add('active');
+  window.scrollTo(0,0);
+  if (name === 'dashboard') loadDashboard();
+}
+
+// ─── FORM ─────────────────────────────────────────────────────
+function updateAvatar(val) {
+  document.getElementById('avatarCircle').textContent = val.trim() ? val.trim()[0].toUpperCase() : '?';
+}
+
+function toggleChip(chip) {
+  const group = chip.closest('.chip-group');
+  if (group.dataset.multi !== 'true') group.querySelectorAll('.chip').forEach(c => c.classList.remove('selected'));
+  chip.classList.toggle('selected');
+}
+
+const scaleValues = {};
+function selectScale(name, val) {
+  scaleValues[name] = val;
+  document.getElementById(name+'-scale').querySelectorAll('.scale-dot').forEach((d,i) => d.classList.toggle('selected', i+1<=val));
+}
+
+const times = [
+  {label:'6–7am',emoji:'🌅'},{label:'7–8am',emoji:'☕'},{label:'8–9am',emoji:'🌤'},
+  {label:'9–10am',emoji:'💻'},{label:'10–11am',emoji:'🔥'},{label:'11–12pm',emoji:'📞'},
+  {label:'12–1pm',emoji:'🥗'},{label:'1–2pm',emoji:'😴'},{label:'2–3pm',emoji:'📋'},
+  {label:'3–4pm',emoji:'💬'},{label:'4–5pm',emoji:'🌇'},{label:'5–6pm',emoji:'🏃'},
+];
+
+let paintMode = 'deep-work';
+const timeBlockStates = {};
+
+function setMode(mode) {
+  paintMode = mode;
+  document.getElementById('mode-deep').classList.toggle('active-mode', mode==='deep-work');
+  document.getElementById('mode-meeting').classList.toggle('active-mode', mode==='meeting');
+  document.getElementById('mode-offline').classList.toggle('active-mode', mode==='offline');
+}
+
+const grid = document.getElementById('timeGrid');
+times.forEach(t => {
+  const block = document.createElement('div');
+  block.className = 'time-block';
+  block.innerHTML = `<span class="time-label">${t.label}</span><span class="time-emoji">${t.emoji}</span>`;
+  block.addEventListener('click', () => {
+    const modes = ['deep-work','meeting','offline'];
+    const current = modes.find(m => block.classList.contains(m));
+    modes.forEach(m => block.classList.remove(m,'selected'));
+    if (current !== paintMode) { block.classList.add(paintMode,'selected'); timeBlockStates[t.label] = paintMode; }
+    else { delete timeBlockStates[t.label]; }
+  });
+  grid.appendChild(block);
+});
+
+function getChips(id) {
+  return [...document.querySelectorAll(`#${id} .chip.selected`)].map(c => c.textContent.trim()).join(', ');
+}
+
+function collectFormData() {
+  return {
+    'Name': document.getElementById('nameInput').value.trim(),
+    'Timezone': document.getElementById('f-timezone').value,
+    'Start Time': document.getElementById('f-starttime').value,
+    'End Time': document.getElementById('f-endtime').value,
+    'Peak Focus': getChips('f-peak'),
+    'Energy Drop': getChips('f-drop'),
+    'Daily Schedule': Object.entries(timeBlockStates).map(([k,v])=>`${k}:${v}`).join(' | '),
+    'Slack Style': scaleValues['slack'] ? String(scaleValues['slack']) : '',
+    'Async Sync': scaleValues['asyncsync'] ? String(scaleValues['asyncsync']) : '',
+    'Reach Me By': getChips('f-reach'),
+    'Learning Style': getChips('f-learning'),
+    'Feedback Style': getChips('f-feedback'),
+    'Recognition': getChips('f-recognition'),
+    'Before Meeting': getChips('f-premeet'),
+    'When Stuck': getChips('f-stuck'),
+    'When Overwhelmed': getChips('f-overwhelmed'),
+    'Hard Stops': document.getElementById('f-hardstops').value.trim(),
+    'One Thing': document.getElementById('f-onething').value.trim(),
+    'Lights Me Up': document.getElementById('f-lightsup').value.trim(),
+  };
+}
+
+async function handleSubmit() {
+  const data = collectFormData();
+  if (!data['Name']) { alert('Please enter your name first!'); return; }
+
+  const btn = document.getElementById('submitBtn');
+  const label = document.getElementById('submitLabel');
+  const spinner = document.getElementById('submitSpinner');
+  btn.disabled = true; label.textContent = 'Saving…'; spinner.style.display = 'block';
+
+  // Always save locally
+  const stored = JSON.parse(localStorage.getItem('team_profiles') || '[]');
+  const idx = stored.findIndex(p => p['Name'].toLowerCase() === data['Name'].toLowerCase());
+  if (idx >= 0) stored[idx] = data; else stored.push(data);
+  localStorage.setItem('team_profiles', JSON.stringify(stored));
+
+  // Try Airtable if configured
+  if (isConfigured()) {
+    try {
+      const token = localStorage.getItem('at_token');
+      const base  = localStorage.getItem('at_base');
+      const table = localStorage.getItem('at_table') || 'Working Styles';
+      await fetch(`https://api.airtable.com/v0/${base}/${encodeURIComponent(table)}`, {
+        method: 'POST',
+        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fields: data })
+      });
+    } catch(e) { console.warn('Airtable save failed', e); }
+  }
+
+  btn.disabled = false; label.textContent = 'Save my working style →'; spinner.style.display = 'none';
+  const banner = document.getElementById('successBanner');
+  banner.style.display = 'block'; window.scrollTo({top:0,behavior:'smooth'});
+  setTimeout(() => banner.style.display = 'none', 5000);
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────
+let allProfiles = [];
+let currentGroupTab = 'all';
+
+async function loadDashboard() {
+  allProfiles = JSON.parse(localStorage.getItem('team_profiles') || '[]');
+
+  if (isConfigured()) {
+    try {
+      const token = localStorage.getItem('at_token');
+      const base  = localStorage.getItem('at_base');
+      const table = localStorage.getItem('at_table') || 'Working Styles';
+      const res = await fetch(`https://api.airtable.com/v0/${base}/${encodeURIComponent(table)}?maxRecords=100`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const json = await res.json();
+      if (json.records) {
+        json.records.map(r => r.fields).forEach(r => {
+          const i = allProfiles.findIndex(p => p['Name'] === r['Name']);
+          if (i >= 0) allProfiles[i] = r; else allProfiles.push(r);
+        });
+      }
+    } catch(e) { console.warn('Airtable load failed', e); }
+  }
+
+  document.getElementById('dashSubtitle').textContent = allProfiles.length
+    ? `${allProfiles.length} team member${allProfiles.length !== 1 ? 's' : ''} have shared their working style`
+    : 'No profiles yet — be the first!';
+
+  renderDashboard();
+}
+
+function setGroupTab(tab, el) {
+  currentGroupTab = tab;
+  document.querySelectorAll('.group-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  renderDashboard();
+}
+
+function renderDashboard() {
+  const body = document.getElementById('dashboardBody');
+  if (!allProfiles.length) {
+    body.innerHTML = `<div class="empty-state"><div class="empty-state-title">No profiles yet</div><p>Be the first to fill out your working style.</p><button class="submit-btn" onclick="showView('form')" style="margin:0 auto;">✏️ Fill mine out</button></div>`;
+    return;
+  }
+  if (currentGroupTab === 'all') {
+    body.innerHTML = `<div class="team-grid">${allProfiles.map(p => personCardHTML(p)).join('')}</div>`;
+  } else {
+    body.innerHTML = renderGrouped(currentGroupTab);
+  }
+}
+
+function personCardHTML(p) {
+  const initial = p['Name'] ? p['Name'][0].toUpperCase() : '?';
+  const rawTags = [p['Peak Focus'], p['Learning Style']].filter(Boolean).join(',').split(',').filter(Boolean).slice(0,3);
+  const tags = rawTags.map(t => `<span class="card-tag">${t.trim()}</span>`).join('');
+  return `<div class="person-card" onclick="showProfile(${JSON.stringify(p['Name'])})">
+    <div class="card-avatar">${initial}</div>
+    <div class="card-name">${p['Name']}</div>
+    <div class="card-tz">${p['Timezone']||'—'} · ${p['Start Time']||'?'} – ${p['End Time']||'?'}</div>
+    <div class="card-tags">${tags}</div>
+  </div>`;
+}
+
+function renderGrouped(field) {
+  const fieldMap = { peak:'Peak Focus', slack:'Slack Style', learning:'Learning Style', feedback:'Feedback Style', overwhelmed:'When Overwhelmed' };
+  const key = fieldMap[field];
+  const groups = {};
+  allProfiles.forEach(p => {
+    const val = p[key] || 'Not specified';
+    val.split(',').map(v=>v.trim()).filter(Boolean).forEach(item => {
+      if (!groups[item]) groups[item] = [];
+      groups[item].push(p);
+    });
+  });
+  if (!Object.keys(groups).length) return '<div class="empty-state"><p>No data for this category yet.</p></div>';
+  return Object.entries(groups).sort((a,b)=>b[1].length-a[1].length).map(([label,people]) => `
+    <div class="group-section">
+      <div class="group-section-title">${label} <span class="group-count">${people.length} person${people.length!==1?'s':''}</span></div>
+      <div class="group-people">${people.map(p=>`<div class="group-person-pill" onclick="showProfile(${JSON.stringify(p['Name'])})"><div class="pill-avatar">${p['Name'][0].toUpperCase()}</div>${p['Name']}</div>`).join('')}</div>
+    </div>`).join('');
+}
+
+// ─── PROFILE ──────────────────────────────────────────────────
+function showProfile(name) {
+  const p = allProfiles.find(x => x['Name'] === name);
+  if (!p) return;
+
+  document.getElementById('profileAvatar').textContent = name[0].toUpperCase();
+  document.getElementById('profileName').textContent = p['Name'];
+  document.getElementById('profileMeta').textContent =
+    [p['Timezone'], (p['Start Time'] && p['End Time']) ? `${p['Start Time']} – ${p['End Time']}` : ''].filter(Boolean).join(' · ');
+
+  function chips(val) {
+    if (!val) return '<span style="color:var(--muted);font-size:13px;">Not specified</span>';
+    return val.split(',').map(v=>`<span class="profile-chip">${v.trim()}</span>`).join('');
+  }
+
+  function scaleBar(val, left, right) {
+    const pct = val ? (parseInt(val)/5)*100 : 0;
+    return `<div class="profile-scale-bar"><span>${left}</span><div class="scale-track"><div class="scale-fill" style="width:${pct}%"></div></div><span>${right}</span></div>`;
+  }
+
+  function miniGrid(str) {
+    if (!str) return '<span style="color:var(--muted);font-size:13px;">Not specified</span>';
+    const map = {};
+    str.split('|').forEach(s => { const [l,m] = s.trim().split(':'); if(l&&m) map[l.trim()]=m.trim(); });
+    return `<div class="mini-time-grid">${times.map(t=>`<div class="mini-time-block ${map[t.label]||''}">${t.label}</div>`).join('')}</div>
+    <div style="display:flex;gap:12px;margin-top:8px;"><span style="font-size:11px;color:var(--sage);">● Deep work</span><span style="font-size:11px;color:var(--accent);">● Meetings</span><span style="font-size:11px;color:#94A3B8;">● Offline</span></div>`;
+  }
+
+  document.getElementById('profileBody').innerHTML = `
+    <div class="profile-section">
+      <div class="profile-section-label">Energy & Schedule</div>
+      <div class="profile-row"><div class="profile-row-label">Peak focus time</div><div class="profile-chips">${chips(p['Peak Focus'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">Energy drop</div><div class="profile-chips">${chips(p['Energy Drop'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">Typical day</div>${miniGrid(p['Daily Schedule'])}</div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Communication</div>
+      <div class="profile-row"><div class="profile-row-label">Slack responsiveness</div>${scaleBar(p['Slack Style'],'Slow burn','Rapid fire')}</div>
+      <div class="profile-row"><div class="profile-row-label">Async vs. sync</div>${scaleBar(p['Async Sync'],'Fully async','Sync first')}</div>
+      <div class="profile-row"><div class="profile-row-label">Reach me by</div><div class="profile-chips">${chips(p['Reach Me By'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">Learning style</div><div class="profile-chips">${chips(p['Learning Style'])}</div></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">Feedback & Collaboration</div>
+      <div class="profile-row"><div class="profile-row-label">Feedback style</div><div class="profile-chips">${chips(p['Feedback Style'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">Recognition</div><div class="profile-chips">${chips(p['Recognition'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">Before a meeting</div><div class="profile-chips">${chips(p['Before Meeting'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">When stuck</div><div class="profile-chips">${chips(p['When Stuck'])}</div></div>
+      <div class="profile-row"><div class="profile-row-label">When overwhelmed</div><div class="profile-chips">${chips(p['When Overwhelmed'])}</div></div>
+    </div>
+    <div class="profile-section">
+      <div class="profile-section-label">A Little More About Me</div>
+      ${p['Hard Stops']?`<div class="profile-row"><div class="profile-row-label">Hard stops</div><div class="profile-text">${p['Hard Stops']}</div></div>`:''}
+      ${p['One Thing']?`<div class="profile-row"><div class="profile-row-label">One thing to know</div><div class="profile-text">${p['One Thing']}</div></div>`:''}
+      ${p['Lights Me Up']?`<div class="profile-row"><div class="profile-row-label">What lights me up ✨</div><div class="profile-text">${p['Lights Me Up']}</div></div>`:''}
+    </div>
+    <div style="padding:24px 0;"><button class="nav-btn" onclick="showView('dashboard')">← Back to team</button></div>
+  `;
+
+  showView('profile');
+}
+
+// ─── INIT ─────────────────────────────────────────────────────
+updateConfigUI();
+</script>
+</body>
+</html>
